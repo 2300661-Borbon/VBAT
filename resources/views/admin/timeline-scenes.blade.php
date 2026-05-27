@@ -34,9 +34,9 @@
                 <tbody class="text-sm">
                     @php
                         $scenes = [
-                            ['name' => 'Pananampalatayang Bauangeño (1695)', 'era' => 'Spanish Colonial', 'status' => 'active', 'visits' => '10', 'assets' => '24 files', 'updated' => '2025-01-15'],
-                            ['name' => 'Role of the Bauan Church (1894)', 'era' => 'Spanish Colonial', 'status' => 'active', 'visits' => '10', 'assets' => '31 files', 'updated' => '2025-01-12'],
-                            ['name' => 'Japanese Atrocities (1945)', 'era' => 'Japanese Occupation', 'status' => 'active', 'visits' => '10', 'assets' => '28 files', 'updated' => '2025-01-10'],
+                            ['name' => 'The Battle of Batangas (1896)', 'era' => 'Spanish Colonial', 'status' => 'active', 'visits' => '10', 'assets' => '24 files', 'updated' => '2025-01-15'],
+                            ['name' => 'Japanede Atrocities (1945)', 'era' => 'Japanese Occupation', 'status' => 'active', 'visits' => '10', 'assets' => '31 files', 'updated' => '2025-01-12'],
+                            ['name' => 'The Sublian (1988)', 'era' => 'Pre-Colonial Indigenous Culture', 'status' => 'active', 'visits' => '10', 'assets' => '28 files', 'updated' => '2025-01-10'],
                         ];
                     @endphp
 

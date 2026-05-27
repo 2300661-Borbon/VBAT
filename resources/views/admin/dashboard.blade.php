@@ -47,15 +47,15 @@
 
         {{-- Top Rated Scenes Section --}}
         <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <h3 class="font-bold text-black text-lg mb-1">Top Rated VR Scenes</h3>
+            <h3 class="font-bold text-black text-lg mb-1">Top Viewed VR Scenes</h3>
             <p class="text-xs text-gray-500 mb-6">Most visited historical experiences this month</p>
             
             <div class="space-y-6">
                 @php
                     $scenes = [
-                        ['name' => 'Pananampalatayang Bauangeño (1695)', 'visits' => '10',  'status' => 'active'],
-                        ['name' => 'Role of the Bauan Church (1894)', 'visits' => '10',  'status' => 'active'],
-                        ['name' => 'Japanese Atrocities (1945)', 'visits' => '10',  'status' => 'active'],
+                        ['name' => 'The Battle of Batangas (1896)', 'visits' => '10',  'status' => 'active'],
+                        ['name' => 'Japanede Atrocities (1945)', 'visits' => '10',  'status' => 'active'],
+                        ['name' => 'The Sublian (1988)', 'visits' => '10',  'status' => 'active'],
                     ];
                 @endphp
 

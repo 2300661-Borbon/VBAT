@@ -25,22 +25,13 @@
                 @php
                     $events = [
                         [
-                            'year' => '1695',
-                            'title' => 'Pananampalatayang Bauangeño',
-                            'description' => 'The finding of the Mahal na Poong Santa Cruz in Dingin, Alitagtag, which became the patron of Bauan and a focal point of local devotion.',
+                            'year' => '1896',
+                            'title' => 'The Battle of Batangas',
+                            'description' => 'The outbreak of the Philippine Revolution in Batangas, marked by the Battle of Batangas, where local revolutionaries clashed with Spanish colonial forces.',
                             'location' => 'Bauan, Batangas',
                             'tag' => 'Spanish Colonial',
                             'vr' => true,
                             'active' => true
-                        ],
-                        [
-                            'year' => '1894',
-                            'title' => 'Role of the Bauan Church',
-                            'description' => 'The completion of the present-day Bauan Church (Immaculate Conception Parish) stone structure, serving as a center for both spiritual and communal life.',
-                            'location' => 'Bauan, Batangas',
-                            'tag' => 'Spanish Colonial',
-                            'vr' => false,
-                            'active' => false
                         ],
                         [
                             'year' => '1945',
@@ -48,6 +39,15 @@
                             'description' => 'The tragic massacre of civilians in Bauan by retreating Japanese forces during the liberation of Batangas in World War II.',
                             'location' => 'Bauan, Batangas',
                             'tag' => 'Japanese Occupation',
+                            'vr' => false,
+                            'active' => false
+                        ],
+                        [
+                            'year' => '1988',
+                            'title' => 'The Sublian',
+                            'description' => 'The establishment of the Sublian, a traditional governance system in Bauan.',
+                            'location' => 'Bauan, Batangas',
+                            'tag' => 'Pre-Colonial Indigenous Culture',
                             'vr' => true,
                             'active' => false
                         ],

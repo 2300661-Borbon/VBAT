@@ -36,7 +36,7 @@
             <p class="text-sm text-gray-500 mb-6">Enable or disable VR scenes for students</p>
             
             <div class="space-y-4">
-                @foreach(['Pananampalatayang Bauangeño' => 45, 'Role of the Bauan Church' => 32, 'Japanese Atrocities' => 0] as $scene => $students)
+                @foreach(['The Battle of Batangas' => 45, 'Japanese Atrocities' => 32, 'The Sublian' => 0] as $scene => $students)
                 <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
                     <div>
                         <p class="font-bold text-black">{{ $scene }}</p>
@@ -58,11 +58,11 @@
             <h2 class="text-xl font-bold text-black mb-4">Active Scene Selector</h2>
             <div class="space-y-3">
                 <button class="w-full flex items-center justify-between p-4 border-2 border-stat-green bg-emerald-50 rounded-xl text-left">
-                    <span class="font-bold text-black">Role of the Bauan Church</span>
+                    <span class="font-bold text-black">The Battle of Batangas</span>
                     <span class="status-badge-active">Currently Loading</span>
                 </button>
                 <button class="w-full p-4 border border-gray-200 bg-white rounded-xl text-left hover:border-sidebar-tan transition">
-                    <span class="font-bold text-black">Pananampalatayang Bauangeño</span>
+                    <span class="font-bold text-black">Japanese Atrocities</span>
                 </button>
             </div>
             <button class="mt-6 w-full bg-stat-green text-white font-bold py-3 rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition">

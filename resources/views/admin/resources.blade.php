@@ -43,9 +43,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             @php
                 $records = [
-                    ['title' => 'Pananampalatayang Bauangeño', 'year' => '1695', 'tag' => 'Spanish Colonial'],
-                    ['title' => 'Bauan Church Image', 'year' => '1894', 'tag' => 'Spanish Colonial'],
-                    ['title' => 'Japanese Occupation Documents', 'year' => '1945', 'tag' => 'Japanese Occupation'],
+                    ['title' => 'The Battle of Batangas', 'year' => '1896', 'tag' => 'Spanish Colonial'],
+                    ['title' => 'Japanese Atrocities Document', 'year' => '1945', 'tag' => 'Japanese Occupation'],
+                    ['title' => 'The Sublian', 'year' => '1988', 'tag' => 'Pre-Colonial Indigenous Culture'],
                 ];
             @endphp
 
@@ -104,9 +104,9 @@
             <div class="p-4 space-y-3">
                 @php
                     $sources = [
-                        ['title' => 'Pananampalatayang Bauangeño', 'type' => 'letter', 'date' => 'August 23, 1896', 'tag' => 'Spanish Colonial'],
-                        ['title' => "Role of the Bauan Church", 'type' => 'poem', 'date' => 'December 30, 1896', 'tag' => 'Spanish Colonial'],
-                        ['title' => 'Japanese Occupation Documents', 'type' => 'decree', 'date' => 'September 21, 1972', 'tag' => 'Japanese Occupation'],
+                        ['title' => 'The Battle of Batangas', 'type' => 'letter', 'date' => 'October 23, 1896', 'tag' => 'Spanish Colonial'],
+                        ['title' => "Japanese Atrocities Document", 'type' => 'poem', 'date' => 'February, 1945', 'tag' => 'Japanese Occupation'],
+                        ['title' => 'The Sublian', 'type' => 'decree', 'date' => 'July 23, 1988', 'tag' => 'Pre-Colonial Indigenous Culture'],
                     ];
                 @endphp
 

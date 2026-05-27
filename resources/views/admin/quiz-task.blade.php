@@ -5,9 +5,9 @@
     tab: 'quizzes',
     showModal: false,
     quizzes: [
-        { title: 'Bauan Battle Quiz', description: 'Test your knowledge of the Battle of Bauan', questionsCount: 10, date: '2025-04-01' },
-        { title: 'EDSA Revolution', description: 'Questions about the EDSA People Power Revolution', questionsCount: 10, date: '2025-03-10' },
-        { title: 'Philippine Revolution', description: 'Historical events of the Philippine Revolution', questionsCount: 10, date: '2025-01-05' }
+        { title: 'The Battle of Batangas Quiz', description: 'Test your knowledge of the Battle of Batangas', questionsCount: 10, date: '2025-04-01' },
+        { title: 'Japanese Atrocities Quiz', description: 'Questions about the Japanese Atrocities', questionsCount: 10, date: '2025-03-10' },
+        { title: 'The Sublian Quiz', description: 'Test your knowledge of the Sublian', questionsCount: 10, date: '2025-01-05' }
     ],
     newQuiz: {
         title: '',
