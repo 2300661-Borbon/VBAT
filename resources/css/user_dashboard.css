@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Faustina:wght@300;400;600&display=swap');
+
+[x-cloak] { display: none !important; }
+
+/* --- Theme Base --- */
+.vintage-bg {
+    background-color: #ffffff;
+    font-family: 'Faustina', serif;
+    color: hsl(24, 20%, 15%);
+}
+
+.timeline-title {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+}
+
+/* --- 3D Effects --- */
+.perspective-container { perspective: 1000px; }
+
+.group:hover img {
+    transform: scale(1.02);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+img {
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* --- Updated Cards: Tasks & Challenges --- */
+.challenge-card {
+     @apply flex flex-col min-w-[340px] flex-1 p-8 rounded-2xl border border-[#e2d5c8] bg-gradient-to-b from-[#fdfbf7] to-[#f4f0ea] shadow-sm transition-all duration-300 hover:-translate-y-1 h-[360px];
+}
+
+.challenge-icon-wrapper {
+    @apply w-12 h-12 rounded-xl border border-[#e2d5c8] bg-[#fbf8f3] flex items-center justify-center mb-6 text-[#922b05];
+}
+
+.challenge-title {
+    @apply text-[22px] font-bold font-serif text-[#2d241e] mb-4 min-h-[60px]; 
+}
+
+.challenge-desc {
+    @apply text-[15px] text-[#2d241e]/80 leading-relaxed flex-grow;
+}
+
+.btn-challenge-outline {
+    @apply w-full py-3.5 rounded-lg border border-[#2d241e] text-[#2d241e] font-bold text-xs uppercase tracking-widest transition-all hover:bg-[#2d241e] hover:text-white mt-6;
+}
+
+/* --- Updated Cards: Knowledge Quizzes (New Design) --- */
+.quiz-card {
+    @apply bg-[#fcfbf9] rounded-2xl shadow-sm border border-[#e5ded3] flex flex-col text-center overflow-hidden transition-transform hover:-translate-y-1;
+}
+        
+.quiz-icon-wrapper {
+    @apply w-12 h-12 rounded-full bg-[#f3ede4] flex items-center justify-center mb-6 text-[#4b3621] mx-auto border border-[#e5ded3];
+}
+        
+.quiz-title {
+    @apply text-[26px] font-bold font-serif text-[#2d241e] mb-3;
+}
+        
+.quiz-desc {
+    @apply text-sm text-[#5a4f46] mb-8 leading-relaxed px-4;
+}
+        
+.btn-quiz-start {
+    @apply mt-auto bg-[#31251e] text-[#fcfbf9] px-6 py-3.5 rounded-xl font-medium text-sm w-full hover:bg-[#1a120e] transition-colors flex items-center justify-center gap-2;
+}
+        
+.quiz-footer {
+    @apply bg-[#f7f4f0] px-6 py-4 flex justify-between items-center text-[13px] text-[#8a7662] font-semibold border-t border-[#e5ded3]/50;
+}
+
+/* --- Quiz Modal Specific Styles (New Design) --- */
+
+/* Choice Labels */
+.quiz-choice-label {
+    @apply flex items-center p-4 border rounded-xl cursor-pointer transition-all duration-200;
+}
+
+.quiz-choice-label:hover {
+    @apply bg-[#fcfbf9] border-[#d5c9ba];
+}
+
+.quiz-choice-selected {
+    @apply border-[#362a22] bg-[#fcfbf9] shadow-sm;
+}
+
+/* Custom Radio Indicator */
+.radio-outer {
+    @apply w-5 h-5 border rounded-full mr-4 flex items-center justify-center transition-colors;
+}
+
+.radio-inner {
+    @apply w-2.5 h-2.5 bg-[#362a22] rounded-full;
+}
+
+/* --- UI Components --- */
+.btn-dark-action {
+    @apply bg-[#3d3d3d] text-white w-full py-3 rounded-lg font-bold text-xs uppercase tracking-widest transition-all hover:bg-black hover:scale-[1.02] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:transform-none;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
