@@ -4,28 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VBaT - User Dashboard</title>
+
+    {{-- GOOGLE MATERIAL ICONS STYLESHEET --}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=quiz,timeline" />
     
     @vite(['resources/css/landing_page.css', 'resources/css/user_dashboard.css', 'resources/js/app.js'])
     
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="vintage-bg min-h-screen relative overflow-x-hidden" 
+<body class="bg-[#f5ebd9] min-h-screen relative text-[#2b1f19] font-body"
       x-data="{ 
-        showModal: false, 
-        eventData: { title: '', year: '', overview: '', significance: '', image: '', vrUrl: '' },
-        openEvent(title, year, overview, significance, image, vrUrl) {
-            this.eventData = { title, year, overview, significance, image, vrUrl };
-            this.showModal = true;
-        },
-        /* Task Modal State */
-        showTaskModal: false,
-        taskData: { title: '', instructions: '' },
-        openTask(title, instructions) {
-            this.taskData = { title, instructions };
-            this.showTaskModal = true;
-        },
-
-        /* --- NEW: Knowledge Quiz State --- */
+        /* --- Knowledge Quiz State --- */
         showQuizModal: false,
         currentQuizName: '',
         currentStep: 0,
@@ -33,7 +22,6 @@
         quizScore: 0,
         quizFinished: false,
         
-        // Quiz Database mapped by Quiz Title
         quizDatabase: {
             'The Battle of Batangas Quiz': [
                 { text: 'Who was the last Filipino general to surrender to the Americans, a native of Santo Tomas, Batangas?', choices: ['Apolinario Mabini', 'Emilio Aguinaldo', 'Miguel Malvar', 'Antonio Luna'], correct: 'Miguel Malvar' },
@@ -73,12 +61,10 @@
             ]
         },
 
-        // Will be populated dynamically on start
         questions: [],
 
         startQuiz(name) {
             this.currentQuizName = name;
-            // Get correct questions based on quiz title, clone to prevent original data mutation
             if(this.quizDatabase[name]) {
                 this.questions = JSON.parse(JSON.stringify(this.quizDatabase[name]));
             } else {
@@ -93,7 +79,7 @@
             this.selectedAnswer = null;
             this.quizScore = 0;
             this.quizFinished = false;
-            // Randomize questions on start/retake
+            // Shuffle questions
             this.questions = this.questions.sort(() => Math.random() - 0.5);
         },
 
@@ -110,298 +96,343 @@
             } else {
                 this.quizFinished = true;
             }
-        },
-
-        get visibleNumbers() {
-            // Only show 1-5 initially, then 6-10 when user reaches question 6 (index 5)
-            return this.currentStep < 5 ? [1, 2, 3, 4, 5] : [6, 7, 8, 9, 10];
         }
       }">
 
-    <header class="flex justify-between items-center p-1 md:px-10 bg-[#c1b5a9] backdrop-blur-sm sticky top-0 z-40 border-b border-[#3d2b1f]/10 shadow-md">
-    
-        {{-- Left Section: Logo & Welcome Message (Font style matched to Landing Nav) --}}
-        <div class="flex flex-1 ml-4 items-center gap-3">
-            <img src="{{ asset('images/VBaT v2.png') }}" alt="VBaT Logo" class="h-17 w-auto object-contain">
-            <div class="text-lg font-extrabold text-black tracking-tight font-title">
-                Welcome back, {{ Auth::user()->name ?? 'Lewis' }}!
-            </div>
-        </div>
-    
-        {{-- Center Section: Navigation Links (Font style matched to Landing Nav + Click Effects) --}}
-        <nav class="hidden md:flex gap-8 flex-1 justify-center mr-5 mt-1">
-            <a href="#timeline" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Timeline</a>
-            <a href="#quiz" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Knowledge Quiz</a>
-        </nav>
-
-        {{-- Right Section: Logout Button --}}
-        <div class="flex-1 flex justify-end">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="bg-[#4b3621] text-white px-5 py-2 rounded-sm text-xs font-sans tracking-widest flex items-center hover:bg-[#98623c] transition">
-                    Logout <span class="ml-1"></span>
-                </button>
-            </form>
-        </div>
-    </header>
-
-    {{-- Added ID and scroll-mt to Timeline section --}}
-    <section id="timeline" class="relative flex flex-col items-center py-16 scroll-mt-24">
+    <div class="flex min-h-screen">
         
-        <div class="text-center mb-24 flex flex-col items-center">
-            <h1 class="timeline-title text-6xl md:text-[5rem] font-black text-[#1a1512] border-b-[4px] border-[#1a1512] pb-1 inline-block uppercase leading-none">
-                TIMELINE
-            </h1>
-            <p class="text-xl md:text-2xl italic text-[#5a4f46] mt-4 font-serif">of Batangas History</p>
-        </div>
+        {{-- LEFT SIDEBAR NAVIGATION (UPDATED ALIGNMENT) --}}
+        <aside class="sidebar-container">
+            <div class="mb-10 px-4 text-center">
+                <img src="{{ asset('images/VBaT v2.png') }}" alt="VBaT Logo" class="h-25 w-auto object-contain mx-auto mb-2">
+            </div>
 
-        <div class="relative w-full max-w-6xl px-4 mx-auto perspective-container">
-            <div class="absolute h-full top-0 left-1/2 -translate-x-1/2 w-[1px] bg-[#d5c9ba]"></div>
+            <nav class="w-full flex flex-col gap-3 px-4">
+                <a href="#timeline" class="nav-link-secondary">
+                    <span class="material-symbols-outlined text-[24px]">timeline</span>
+                    <span>Timeline</span>
+                </a>
 
-            {{-- Timeline Item: The Battle of Batangas --}}
-            <div class="relative w-full flex items-center justify-center mb-32 group">
-                <div class="w-1/2 pr-12 md:pr-24 flex justify-end">
-                    <div class="relative w-80 md:w-96">
-                        <div class="absolute inset-0 bg-[#433123] rounded-[1.25rem] translate-x-4 translate-y-4"></div>
-                        <div class="relative bg-[#fdfbf7] p-2 rounded-xl shadow-sm border border-[#e2d5c8]">
-                            <img src="{{ asset('images/Battle of Bats.jpg') }}" class="w-full rounded-lg object-cover" alt="Bauan Map">
+                {{-- SIDEBAR SEPARATOR LINE --}}
+                <hr class="border-[#c4b5a0] mx-2 my-1">
+
+                <a href="#quiz" class="nav-link-secondary">
+                    <span class="material-symbols-outlined text-[24px]">quiz</span>
+                    <span>Quiz</span>
+                </a>
+            </nav>
+        </aside>
+
+        {{-- MAIN CONTENT AREA --}}
+        <main class="main-content-area">
+            
+            {{-- TOP HEADER BAR --}}
+            <header class="bg-[#48352b] text-[#ebdcd0] px-8 py-3 flex justify-between items-center shadow-md sticky top-0 z-40">
+                <p class="text-sm">
+                    Welcome to VBAT, {{ Auth::user()->name ?? 'User' }}!
+                </p>
+    
+                <a href="{{ route('logout') }}" class="btn-primary py-1.5 px-4 text-xs tracking-wider">
+                    Logout &rarr;
+                </a>
+            </header>
+
+            {{-- BANNER TITLE --}}
+            <div class="bg-[#3b2b23] text-center py-3 border-b border-[#2b1f19]">
+                <h1 class="text-xl md:text-2xl tracking-widest text-[#ebdcd0] uppercase font-bold">
+                    BATANGAS HISTORY & CULTURE
+                </h1>
+            </div>
+
+            {{-- TIMELINE SECTION --}}
+            <section id="timeline" class="flex flex-col w-full">
+                
+                {{-- TIMELINE ITEM 1: BATTLE OF BATANGAS --}}
+                <div x-data="{ open: false }" class="relative w-full h-[480px] overflow-hidden border-b border-[#2b1f19]">
+                    <img src="{{ asset('images/Battle of Bats.jpg') }}" 
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out cursor-pointer"
+                         :class="open ? 'scale-110 brightness-40 blur-sm' : 'scale-100 brightness-75 hover:scale-105 hover:brightness-90'"
+                         @click="open = true"
+                         alt="Battle of Batangas">
+
+                    <div x-show="!open" 
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         @click="open = true"
+                         class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-6 cursor-pointer z-10">
+                        <h2 class="text-6xl md:text-7xl font-bold tracking-widest drop-shadow-md">1901</h2>
+                        <p class="text-xl md:text-2xl font-mono tracking-wider uppercase mt-2 drop-shadow-md hero-description">BATTLE OF BATANGAS</p>
+                        <div class="mt-12 flex items-center gap-2 text-xs tracking-widest uppercase bg-black/60 px-4 py-2 rounded-full border border-white/20 hover:bg-black/80 transition font-sans">
+                            <span>CLICK PHOTO TO READ</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M6.67 14.83a1 1 0 001.41 0L11 11.83l2.92 2.92a1 1 0 001.64-.71v-8a1 1 0 00-1-1h-8a1 1 0 00-.71 1.64l2.92 2.92-2.92 2.92a1 1 0 000 1.41z"/></svg>
+                        </div>
+                    </div>
+
+                    <div x-show="open" 
+                         x-cloak
+                         x-transition:enter="transition ease-out duration-400"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-6 z-20">
+                        
+                        <div class="bg-[#eddcc8]/95 text-[#2b1f19] p-6 md:p-8 rounded-xl max-w-4xl w-full relative shadow-2xl border border-[#d0beaa] flex flex-col">
+                            <button @click="open = false" class="absolute top-4 right-6 text-xl font-bold hover:text-red-700 transition" title="Close">✕</button>
+                            
+                            <div class="text-center mb-4">
+                                <h3 class="text-2xl font-bold uppercase tracking-widest text-[#2b1f19]">BATTLE OF BATANGAS</h3>
+                                <p class="text-sm font-bold text-[#634e40]">1901</p>
+                            </div>
+
+                            <div class="bg-[#48352b] text-[#eddcc8] p-6 rounded-lg text-xs md:text-sm leading-relaxed max-h-[300px] overflow-y-auto custom-scrollbar shadow-inner">
+                                <h4 class="font-bold text-sm mb-3 text-[#f2e2d0] border-b border-[#6a5042] pb-1">About:</h4>
+                                <p class="text-justify">
+                                    In late 1901, Brigadier General J. Franklin Bell assumed command of American forces in the region to suppress the Filipino resistance led by General Miguel Malvar. Following a brief December offensive by Malvar's forces against several garrisons, Bell responded with a sweeping and aggressive counter-insurgency campaign. The U.S. military enforced a strict concentration policy, forcing civilians into designated town zones while troops destroyed standing crops, burned thousands of tons of palay, and slaughtered livestock outside the zones to starve out the guerrillas. The resulting overcrowded and unsanitary conditions inside the camps, combined with severe food shortages, sparked a massive mortality crisis in Batangas dominated by a malaria epidemic. Concurrently, American commanders incarcerated local elite leaders and captured soldiers, using pressure tactics to turn them into informers who exposed guerrilla hiding places and support networks. As his subordinate officers were systematically captured or forced to surrender, Malvar became isolated in the mountains without a staff, food, or serviceable weapons. Realizing that continued fighting would prevent rice planting and cause widespread famine among the populace, Malvar marched into Lipa and surrendered to General Bell on April 16, 1902. With the remaining guerrilla leaders following suit, Bell reopened local ports and restored Batangas to civilian control, officially concluding the battle for Batangas by the first week of May 1902.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-[#ebe3d5] rounded-full shadow-sm z-10 border-2 border-[#d0c4b5]">
-                    <div class="w-9 h-9 bg-[#f4ebd9] rounded-full flex items-center justify-center shadow-inner">
-                        <div class="w-3.5 h-3.5 bg-[#4b3621] rounded-full"></div>
-                    </div>
-                </div>
+                {{-- TIMELINE ITEM 2: JAPANESE ATROCITIES --}}
+                <div x-data="{ open: false }" class="relative w-full h-[480px] overflow-hidden border-b border-[#2b1f19]">
+                    <img src="{{ asset('images/Japanese Bats.jpg') }}" 
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out cursor-pointer"
+                         :class="open ? 'scale-110 brightness-40 blur-sm' : 'scale-100 brightness-75 hover:scale-105 hover:brightness-90'"
+                         @click="open = true"
+                         alt="Japanese Atrocities">
 
-                <div class="w-1/2 pl-12 md:pl-24">
-                    <h3 class="text-6xl md:text-[5rem] font-bold font-serif text-[#1a1512] leading-none mb-4">1896</h3>
-                    <p class="text-[#922b05] font-bold uppercase tracking-widest text-sm mb-6">The Battle of Batangas</p>
-                    <p class="text-[#5a4f46] leading-relaxed max-w-md font-serif text-[15px]">The Battle of Batangas was a pivotal moment in the Philippine Revolution, showcasing the determination of the local fighters.</p>
-                    <button @click="openEvent('THE BATTLE OF BATANGAS', '1896', 'The Battle of Batangas was a pivotal moment in the Philippine Revolution, showcasing the determination of the local fighters.', 'This battle is a testament to the bravery and sacrifice of the people of Batangas.', '{{ asset('images/Battle of Bats.jpg') }}', '/vr/batangas-battle')" 
-                            class="mt-8 text-xs font-bold uppercase tracking-[0.15em] flex items-center gap-2 text-[#1a1512] hover:text-[#922b05] transition outline-none">
-                        Explore Chapter <span class="text-lg leading-none">&rarr;</span>
-                    </button>
-                </div>
-            </div>
-
-            {{-- Timeline Item: Japanese Atrocities --}}
-            <div class="relative w-full flex items-center justify-center mb-32 group">
-                <div class="w-1/2 pr-12 md:pr-24 flex flex-col items-end text-right">
-                    <h3 class="text-6xl md:text-[5rem] font-bold font-serif text-[#1a1512] leading-none mb-4">1945</h3>
-                    <p class="text-[#922b05] font-bold uppercase tracking-widest text-sm mb-6">Japanese Atrocities</p>
-                    <p class="text-[#5a4f46] leading-relaxed max-w-md font-serif text-[15px]">The Japanese occupation of the Philippines occurred between 1941 and 1945, when the Imperial Japanese forces invaded the islands during World War II.</p>
-                    <button @click="openEvent('JAPANESE ATROCITIES', '1945', 'The Japanese occupation of the Philippines was marked by widespread atrocities and human rights violations.', 'This period is a stark reminder of the horrors of war and the resilience of the Filipino people.', '{{ asset('images/Japanese Bats.jpg') }}', '/vr/japanese-atrocities')" 
-                            class="mt-8 text-xs font-bold uppercase tracking-[0.15em] flex items-center justify-end gap-2 text-[#1a1512] hover:text-[#922b05] transition outline-none">
-                        Explore Chapter <span class="text-lg leading-none">&rarr;</span>
-                    </button>
-                </div>
-
-                <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-[#ebe3d5] rounded-full shadow-sm z-10 border-2 border-[#d0c4b5]">
-                    <div class="w-9 h-9 bg-[#f4ebd9] rounded-full flex items-center justify-center shadow-inner">
-                        <div class="w-3.5 h-3.5 bg-[#4b3621] rounded-full"></div>
-                    </div>
-                </div>
-
-                <div class="w-1/2 pl-12 md:pl-24 flex justify-start">
-                    <div class="relative w-80 md:w-96">
-                        <div class="absolute inset-0 bg-[#433123] rounded-[1.25rem] -translate-x-4 translate-y-4"></div>
-                        <div class="relative bg-[#fdfbf7] p-2 rounded-xl shadow-sm border border-[#e2d5c8]">
-                            <img src="{{ asset('images/Japanese Bats.jpg') }}" class="w-full rounded-lg object-cover" style="aspect-ratio: 4/3;" alt="Bauan Church">
+                    <div x-show="!open" 
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         @click="open = true"
+                         class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-6 cursor-pointer z-10">
+                        <h2 class="text-6xl md:text-7xl font-bold tracking-widest drop-shadow-md">1945</h2>
+                        <p class="text-xl md:text-2xl tracking-wider uppercase mt-2 drop-shadow-md hero-description">JAPANESE ATROCITIES</p>
+                        <div class="mt-12 flex items-center gap-2 text-xs tracking-widest uppercase bg-black/60 px-4 py-2 rounded-full border border-white/20 hover:bg-black/80 transition font-sans">
+                            <span>CLICK PHOTO TO READ</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M6.67 14.83a1 1 0 001.41 0L11 11.83l2.92 2.92a1 1 0 001.64-.71v-8a1 1 0 00-1-1h-8a1 1 0 00-.71 1.64l2.92 2.92-2.92 2.92a1 1 0 000 1.41z"/></svg>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            {{-- Timeline Item: The Sublian --}}
-            <div class="relative w-full flex items-center justify-center mb-32 group">
-                <div class="w-1/2 pr-12 md:pr-24 flex justify-end">
-                    <div class="relative w-80 md:w-96">
-                        <div class="absolute inset-0 bg-[#433123] rounded-[1.25rem] translate-x-4 translate-y-4"></div>
-                        <div class="relative bg-[#fdfbf7] p-2 rounded-xl shadow-sm border border-[#e2d5c8]">
-                            <img src="{{ asset('images/Sublian.png') }}" class="w-full rounded-lg object-cover" style="aspect-ratio: 4/3;" alt="Japanese Atrocities">
+                    <div x-show="open" 
+                         x-cloak
+                         x-transition:enter="transition ease-out duration-400"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-6 z-20">
+                        
+                        <div class="bg-[#eddcc8]/95 text-[#2b1f19] p-6 md:p-8 rounded-xl max-w-4xl w-full relative shadow-2xl border border-[#d0beaa] flex flex-col">
+                            <button @click="open = false" class="absolute top-4 right-6 text-xl font-bold hover:text-red-700 transition" title="Close">✕</button>
+                            
+                            <div class="text-center mb-4">
+                                <h3 class="text-2xl font-bold uppercase tracking-widest text-[#2b1f19]">JAPANESE ATROCITIES</h3>
+                                <p class="text-sm font-bold text-[#634e40]">1945</p>
+                            </div>
+
+                            <div class="bg-[#48352b] text-[#eddcc8] p-6 rounded-lg text-xs md:text-sm leading-relaxed max-h-[300px] overflow-y-auto custom-scrollbar shadow-inner">
+                                <h4 class="font-bold text-sm mb-3 text-[#f2e2d0] border-b border-[#6a5042] pb-1">About:</h4>
+                                <p class="text-justify">
+                                    The Japanese occupation of the Philippines between 1941 and 1945 brought severe hardship to Batangas. As Allied forces liberated Luzon in early 1945, retreating Imperial Japanese Army units conducted systematic massacres across Batangas towns, including Lipa, Bauan, and Taal. Thousands of non-combatant civilians were tortured and executed by the Kempeitai in attempt to quell local resistance and guerrilla networks such as the Hunters ROTC. Despite the terror, local guerrillas actively aided General Douglas MacArthur's forces in reclaiming the province, leading to the full liberation of Batangas by mid-1945.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 bg-[#ebe3d5] rounded-full shadow-sm z-10 border-2 border-[#d0c4b5]">
-                    <div class="w-9 h-9 bg-[#f4ebd9] rounded-full flex items-center justify-center shadow-inner">
-                        <div class="w-3.5 h-3.5 bg-[#4b3621] rounded-full"></div>
+                {{-- TIMELINE ITEM 3: THE SUBLIAN --}}
+                <div x-data="{ open: false }" class="relative w-full h-[480px] overflow-hidden">
+                    <img src="{{ asset('images/Sublian.png') }}" 
+                         class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out cursor-pointer"
+                         :class="open ? 'scale-110 brightness-40 blur-sm' : 'scale-100 brightness-75 hover:scale-105 hover:brightness-90'"
+                         @click="open = true"
+                         alt="The Sublian">
+
+                    <div x-show="!open" 
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         @click="open = true"
+                         class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white p-6 cursor-pointer z-10">
+                        <h2 class="text-6xl md:text-7xl font-bold tracking-widest drop-shadow-md">1988</h2>
+                        <p class="text-xl md:text-2xl tracking-wider uppercase mt-2 drop-shadow-md hero-description">THE SUBLIAN</p>
+                        <div class="mt-12 flex items-center gap-2 text-xs tracking-widest uppercase bg-black/60 px-4 py-2 rounded-full border border-white/20 hover:bg-black/80 transition font-sans">
+                            <span>CLICK PHOTO TO READ</span>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M6.67 14.83a1 1 0 001.41 0L11 11.83l2.92 2.92a1 1 0 001.64-.71v-8a1 1 0 00-1-1h-8a1 1 0 00-.71 1.64l2.92 2.92-2.92 2.92a1 1 0 000 1.41z"/></svg>
+                        </div>
+                    </div>
+
+                    <div x-show="open" 
+                         x-cloak
+                         x-transition:enter="transition ease-out duration-400"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center p-6 z-20">
+                        
+                        <div class="bg-[#eddcc8]/95 text-[#2b1f19] p-6 md:p-8 rounded-xl max-w-4xl w-full relative shadow-2xl border border-[#d0beaa] flex flex-col">
+                            <button @click="open = false" class="absolute top-4 right-6 text-xl font-bold hover:text-red-700 transition" title="Close">✕</button>
+                            
+                            <div class="text-center mb-4">
+                                <h3 class="text-2xl font-bold uppercase tracking-widest text-[#2b1f19]">THE SUBLIAN</h3>
+                                <p class="text-sm font-bold text-[#634e40]">1988</p>
+                            </div>
+
+                            <div class="bg-[#48352b] text-[#eddcc8] p-6 rounded-lg text-xs md:text-sm leading-relaxed max-h-[300px] overflow-y-auto custom-scrollbar shadow-inner">
+                                <h4 class="font-bold text-sm mb-3 text-[#f2e2d0] border-b border-[#6a5042] pb-1">About:</h4>
+                                <p class="text-justify mb-3">
+                                    According to the official website of Batangas City, The Sublian Festival was started by the city Mayor Eduardo Dimacuha on July 23, 1988 on the annual observation of the city hood of Batangas City. The objective is to renew the practice of the subli.
+                                </p>
+                                <p class="text-justify font-bold mb-2 text-[#f2e2d0]">So, what is a subli?</p>
+                                <p class="text-justify">
+                                    A subli is offered at a feast, as a ceremonial worship dance in honor of the Holy Cross. The image of the Holy Cross was found during the Spanish rule in the town of Alitagtag. It is the patron saint of ancient town of Bauan. The dance is indigenous to the province of Batangas. The subli consists of long prayers, songs and dances which are arranged in a fixed order. The dancers are made up of one, two or eight couples. The male dancers shuffle in intense fashion and hit the ground using a bamboo stick, while the female, dance with a sophisticated wrist and finger movement. The parade usually starts in morning on the 23rd of July after the floral offering. It is commonly participated by the city government employees, non-government organization, schools and socio-civic organization. The participants wear their native clothes with their subli hats decorated to represent Batangueño characteristics and traditions. The highlight of the event is the Foundation Day and the Sublian sa Kalye (in the street) where participants will march and dance the subli in the streets. There are around a thousand students who join and perform a street dancing subli. The parade usually takes at least an hour or more to complete. After the Sublian Parade, programs are scheduled for the whole day at the City Hall Complex. One interesting program during the celebration is the Lupakan (making of a snack called nilupak) at Awitan (singing) held at the People's Quadrangle. Here you can catch a glimpse of how the native snack nilupak is made. And at the same time have a taste of the delectable snack. (Source: batangas-philippines.com)
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="w-1/2 pl-12 md:pl-24">
-                    <h3 class="text-6xl md:text-[5rem] font-bold font-serif text-[#1a1512] leading-none mb-4">1988</h3>
-                    <p class="text-[#922b05] font-bold uppercase tracking-widest text-sm mb-6">The Sublian</p>
-                    <p class="text-[#5a4f46] leading-relaxed max-w-md font-serif text-[15px]">Deeply rooted in Bauan, Batangas, the Subli is a traditional folk dance and religious devotion performed in honor of the Mahal na Poong Santa Krus (Holy Cross), showcasing the rich cultural heritage and faith of Batangueños.</p>
-                    <button @click="openEvent('THE SUBLIAN', '1988', 'The Subli is a traditional folk dance and religious devotion performed in honor of the Mahal na Poong Santa Krus (Holy Cross).', 'This cultural practice highlights the rich heritage and faith of the Batangueño people.', '{{ asset('images/Sublian.png') }}', '/vr/the-sublian')" 
-                            class="mt-8 text-xs font-bold uppercase tracking-[0.15em] flex items-center gap-2 text-[#1a1512] hover:text-[#922b05] transition outline-none">
-                        Explore Chapter <span class="text-lg leading-none">&rarr;</span>
-                    </button>
-                </div>  
-            </div>
-        </div>
-    </section>
+            </section>
 
-    {{-- Event Detail Modal --}}
-    <div x-show="showModal" 
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
+            <hr class="border-t-[4px] border-[#2b1f19] w-full shadow-lg">
+
+            {{-- KNOWLEDGE QUIZZES SECTION --}}
+            <section id="quiz" class="bg-[#48352b] text-[#f2e2d0] py-16 px-8 md:px-16 flex-1">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Knowledge Quizzes</h2>
+                    <p class="text-sm text-[#d0beaa] mb-12">Test your understanding of Philippine history events</p>
+                    
+                    @php
+                    $quizzes = [
+                        [
+                            'title' => 'The Battle of Batangas Quiz',
+                            'desc' => 'Assess your knowledge on the strategic encounters, key figures, and the historic impact of the Battle of Batangas.'
+                        ],
+                        [
+                            'title' => 'Japanese Atrocities Quiz',
+                            'desc' => 'Test your understanding of the dark period of the Japanese occupation and the resilience of the locals who faced these hardships.'
+                        ],
+                        [
+                            'title' => 'The Sublian Quiz',
+                            'desc' => 'Explore your knowledge of the rich cultural heritage, religious devotion, and rhythmic traditions of the Subli dance and festival.'
+                        ]
+                    ];
+                    @endphp
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        @foreach($quizzes as $quiz)
+                        <div class="quiz-card">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="quiz-icon-wrapper">
+                                    <span class="italic">B</span>
+                                </div>
+                                
+                                <h3 class="quiz-title">{{ $quiz['title'] }}</h3>
+                                <p class="quiz-desc">{{ $quiz['desc'] }}</p>
+                            </div>
+
+                            <div class="w-full">
+                                <button @click="startQuiz('{{ $quiz['title'] }}')" class="btn-quiz-start">
+                                    Start Knowledge Quiz &rarr;
+                                </button>
+                                
+                                <div class="quiz-footer">
+                                    <span>10 Questions</span>
+                                    <span>Passing Score: 70%</span>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    {{-- QUIZ MODAL --}}
+    <div x-show="showQuizModal" 
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
          x-cloak>
         
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-hidden flex flex-col md:flex-row" @click.away="showModal = false">
-            <button @click="showModal = false" class="absolute top-4 right-6 text-3xl font-light hover:text-red-600 transition">&times;</button>
-
-            <div class="md:w-2/5 p-8 flex flex-col items-center justify-center bg-gray-50 border-r border-gray-100">
-                <img :src="eventData.image" class="w-full rounded-lg shadow-lg mb-8 transform hover:scale-105 transition duration-500" alt="Detail Image">
-                <a :href="eventData.vrUrl" class="w-full bg-[#3d2b1f] text-white py-4 px-6 rounded-full font-bold text-sm uppercase tracking-widest text-center hover:bg-black transition shadow-lg flex items-center justify-center gap-3">
-                    <span>Enter VR Experience</span>
-                    <span class="text-lg"></span>
-                </a>
-            </div>
-
-            <div class="md:w-3/5 p-10">
-                <h2 class="timeline-title text-4xl font-black text-[#2d241e] leading-tight mb-1" x-text="eventData.title"></h2>
-                <p class="text-gray-400 font-bold font-serif tracking-widest uppercase text-sm mb-8" x-text="eventData.year"></p>
+        <div class="bg-[#fcfbf9] rounded-xl shadow-2xl w-full max-w-4xl relative overflow-hidden flex flex-col md:flex-row min-h-[500px]" @click.away="showQuizModal = false">
+            
+            <div class="md:w-[35%] bg-[#362a22] text-white flex flex-col items-center justify-center relative p-8">
+                <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
                 
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="text-lg font-bold font-serif text-[#2d241e] mb-2 uppercase tracking-wide">Overview</h4>
-                        <p class="text-gray-600 font-serif leading-relaxed text-justify" x-text="eventData.overview"></p>
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full border border-[#8a7662] flex items-center justify-center mb-6">
+                        <span class="italic text-xl text-[#8a7662] font-title">VBAT</span>
                     </div>
-
-                    <div class="bg-[#f3e9d8] p-6 rounded-xl border-l-8 border-[#b0956d] shadow-sm">
-                        <h4 class="text-sm font-bold font-serif text-[#4a3926] mb-2 uppercase tracking-widest">Historical Significance</h4>
-                        <p class="text-gray-700 font-serif italic leading-relaxed text-sm" x-text="eventData.significance"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- REDESIGNED KNOWLEDGE QUIZ SECTION --}}
-    <section id="quiz" class="max-w-6xl mx-auto px-8 mb-32 scroll-mt-24">
-        <h2 class="text-5xl font-serif text-[#2d241e] font-bold mb-2">Knowledge Quizzes</h2>
-        <p class="text-lg text-[#2d241e]/80 mb-10 italic font-serif">Test your understanding of Batangas history.</p>
-        
-        @php
-        $quizzes = [
-        [
-            'title' => 'The Battle of Batangas Quiz',
-            'desc' => 'Assess your knowledge on the strategic encounters, key figures, and the historic impact of the Battle of Batangas.'
-        ],
-        [
-            'title' => 'Japanese Atrocities Quiz',
-            'desc' => 'Test your understanding of the dark period of the Japanese occupation and the resilience of the locals who faced these hardships.'
-        ],
-        [
-            'title' => 'The Sublian Quiz',
-            'desc' => 'Explore your knowledge of the rich cultural heritage, religious devotion, and rhythmic traditions of the Subli dance and festival.'
-        ]
-    ];
-    @endphp
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        @foreach($quizzes as $quiz)
-        <div class="quiz-card">
-            <div class="p-8 flex flex-col items-center flex-grow w-full">
-                <div class="quiz-icon-wrapper">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </div>
-            
-                <h3 class="quiz-title">{{ $quiz['title'] }}</h3>
-            
-                <p class="quiz-desc text-center">{{ $quiz['desc'] }}</p>
-            
-                <button @click="startQuiz('{{ $quiz['title'] }}')" class="btn-quiz-start mt-4">
-                    Start Knowledge Quiz &rarr;
-                </button>
-            </div>
-        
-            <div class="quiz-footer">
-                <span>10 Questions</span>
-                <span>Passing Score: 70%</span>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-        {{-- REDESIGNED QUIZ MODAL --}}
-        <div x-show="showQuizModal" 
-             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-             x-cloak>
-            
-            <div class="bg-[#fcfbf9] rounded-xl shadow-2xl w-full max-w-4xl relative overflow-hidden flex flex-col md:flex-row min-h-[500px]" @click.away="showQuizModal = false">
-                
-                <div class="md:w-[35%] bg-[#362a22] text-white flex flex-col items-center justify-center relative p-8">
-                    <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px); background-size: 24px 24px;"></div>
+                    <h3 class="text-2xl leading-tight mb-16 text-[#fdfbf7]">Test Your<br>Batangas Historical<br>Knowledge</h3>
                     
-                    <div class="relative z-10 flex flex-col items-center text-center">
-                        <div class="w-16 h-16 rounded-full border border-[#8a7662] flex items-center justify-center mb-6">
-                            <span class="font-serif italic text-1xl text-[#8a7662]">VBAT</span>
-                        </div>
-                        <h3 class="font-serif text-2xl leading-tight mb-16 text-[#fdfbf7]">Test Your<br>Batangas Historical<br>Knowledge</h3>
-                        
-                        <div class="w-16 border-t border-[#8a7662]/30 mb-8"></div>
-                        
-                        <div class="uppercase tracking-[0.2em] text-[10px] text-[#8a7662] mb-3 font-semibold">PROGRESS</div>
-                        <div class="font-serif text-[#fdfbf7]">
-                            <span class="text-3xl font-bold" x-text="currentStep + 1"></span>
-                            <span class="text-sm text-[#8a7662]">/10</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:w-[65%] p-10 md:p-14 relative flex flex-col">
-                    <button @click="showQuizModal = false" class="absolute top-6 right-6 text-3xl font-light text-gray-400 hover:text-gray-700 transition">&times;</button>
-
-                    <div x-show="quizFinished" class="flex-grow flex flex-col justify-center items-center text-center h-full">
-                        <h2 class="text-3xl font-bold font-serif text-[#2d241e] mb-4">Quiz Results</h2>
-                        <p class="text-lg text-gray-600 mb-8 font-serif">You scored <span class="font-bold text-[#2d241e]" x-text="quizScore"></span> out of 10 (<span x-text="(quizScore/10)*100"></span>%)</p>
-                        
-                        <div x-show="(quizScore/10)*100 >= 70" class="text-green-700 font-bold text-xl mb-8 font-serif bg-green-50 px-6 py-3 rounded-lg border border-green-200 shadow-sm">🎉 Congratulations! You Passed.</div>
-                        <div x-show="(quizScore/10)*100 < 70" class="text-red-700 font-bold text-xl mb-8 font-serif bg-red-50 px-6 py-3 rounded-lg border border-red-200 shadow-sm">Better luck next time.</div>
-
-                        <div class="flex gap-4">
-                            <button x-show="(quizScore/10)*100 < 70" @click="resetQuiz()" class="px-6 py-3 bg-[#31251e] text-[#fcfbf9] rounded-xl font-medium text-sm transition-colors hover:bg-[#1a120e]">Retake Quiz</button>
-                            <button @click="showQuizModal = false" class="px-6 py-3 border border-[#31251e] text-[#31251e] rounded-xl font-medium text-sm transition-colors hover:bg-[#f4efe9]">Close</button>
-                        </div>
-                    </div>
-
-                    <div x-show="!quizFinished" class="flex-grow flex flex-col">
-                        <h3 class="text-[26px] font-serif text-[#2d241e] mb-10 leading-snug" x-text="questions[currentStep]?.text"></h3>
-
-                        <div class="space-y-4 flex-grow">
-                            <template x-for="(choice, index) in questions[currentStep]?.choices" :key="'q-' + currentStep + '-c-' + index">
-                                <label class="quiz-choice-label" :class="selectedAnswer === choice ? 'quiz-choice-selected border-[#362a22] bg-[#f0eadd]' : 'border-[#e5ded3] bg-transparent hover:bg-[#fcfbf9]'">
-                                    <input type="radio" :name="'quiz_step_' + currentStep" :value="choice" x-model="selectedAnswer" class="hidden">
-                                    <div class="radio-outer" :class="selectedAnswer === choice ? 'border-[#362a22]' : 'border-gray-300'">
-                                        <div x-show="selectedAnswer === choice" class="radio-inner bg-[#362a22]"></div>
-                                    </div>
-                                    <span class="font-bold text-[#2d241e] text-sm" x-text="choice"></span>
-                                </label>
-                            </template>
-                        </div>
-
-                        <div class="mt-10 flex justify-end">
-                            <button @click="nextQuestion()" 
-                                    :disabled="!selectedAnswer"
-                                    class="px-8 py-3.5 rounded-xl font-medium text-sm transition-all"
-                                    :class="!selectedAnswer ? 'bg-[#f4efe9] text-gray-400 cursor-not-allowed' : 'bg-[#e5ddd2] text-[#2d241e] hover:bg-[#d5c9ba]'">
-                                <span x-text="currentStep === 9 ? 'Finish Quiz' : 'Next Question'"></span>
-                            </button>
-                        </div>
+                    <div class="w-16 border-t border-[#8a7662]/30 mb-8"></div>
+                    
+                    <div class="uppercase tracking-[0.2em] text-[10px] text-[#8a7662] mb-3 font-semibold font-sans">PROGRESS</div>
+                    <div class="text-[#fdfbf7]">
+                        <span class="text-3xl font-bold" x-text="currentStep + 1"></span>
+                        <span class="text-sm text-[#8a7662]">/10</span>
                     </div>
                 </div>
             </div>
+
+            <div class="md:w-[65%] p-10 md:p-14 relative flex flex-col">
+                <button @click="showQuizModal = false" class="absolute top-6 right-6 text-3xl font-light text-gray-400 hover:text-gray-700 transition">&times;</button>
+
+                {{-- QUIZ FINISHED STATE --}}
+                <div x-show="quizFinished" class="flex-grow flex flex-col justify-center items-center text-center h-full">
+                    <h2 class="text-3xl font-bold text-[#2d241e] mb-4">Quiz Results</h2>
+                    <p class="text-lg text-gray-600 mb-8">You scored <span class="font-bold text-[#2d241e]" x-text="quizScore"></span> out of 10 (<span x-text="(quizScore/10)*100"></span>%)</p>
+                    
+                    <div x-show="(quizScore/10)*100 >= 70" class="text-green-700 font-bold text-xl mb-8 bg-green-50 px-6 py-3 rounded-lg border border-green-200 shadow-sm font-sans">🎉 Congratulations! You Passed.</div>
+                    <div x-show="(quizScore/10)*100 < 70" class="text-red-700 font-bold text-xl mb-8 bg-red-50 px-6 py-3 rounded-lg border border-red-200 shadow-sm font-sans">Better luck next time.</div>
+
+                    <div class="flex gap-4">
+                        <button x-show="(quizScore/10)*100 < 70" @click="resetQuiz()" class="btn-primary">
+                            Retake Quiz
+                        </button>
+                        <button @click="showQuizModal = false" class="px-6 py-3 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition text-xs tracking-wider font-semibold font-sans shadow-md">
+                            Close
+                        </button>
+                    </div>
+                </div>
+
+                {{-- ACTIVE QUIZ STATE --}}
+                <div x-show="!quizFinished && questions.length > 0" class="flex flex-col h-full">
+                    <div class="mb-2">
+                        <h4 class="text-sm text-[#8a7662] mb-4 uppercase tracking-widest" x-text="currentQuizName"></h4>
+                        <h2 class="text-2xl text-[#2d241e] leading-snug min-h-[80px]" x-text="questions[currentStep]?.text"></h2>
+                    </div>
+
+                    <div class="flex-grow flex flex-col gap-3 mt-6">
+                        <template x-for="choice in questions[currentStep]?.choices" :key="choice">
+                            <label class="quiz-choice-label" :class="selectedAnswer === choice ? 'quiz-choice-selected' : ''">
+                                <input type="radio" x-model="selectedAnswer" :value="choice" class="modal-input w-4 h-4 text-[#31251e] focus:ring-[#31251e] border-gray-300">
+                                <span class="ml-4 text-[#4a3c31]" x-text="choice"></span>
+                            </label>
+                        </template>
+                    </div>
+
+                    <div class="mt-8 flex justify-end">
+                        <button @click="nextQuestion()" 
+                                :disabled="!selectedAnswer"
+                                class="btn-primary disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed">
+                            <span x-text="currentStep === 9 ? 'FINISH QUIZ' : 'NEXT QUESTION'"></span> &rarr;
+                        </button>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </section>
-    
+    </div>
 </body>
 </html>

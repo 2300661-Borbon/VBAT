@@ -1,13 +1,41 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Faustina:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Faustina:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
-[x-cloak] { display: none !important; }
+/* --- Alpine.js Utility --- */
+[x-cloak] { 
+    display: none !important; 
+}
+
+/* --- Global Typography Hierarchy --- */
+body, p, .font-body {
+    font-family: 'Faustina', serif;
+}
+
+h1, h2, h3, h4, .font-title {
+    font-family: 'Cinzel', serif;
+}
+
+.modal-input {
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary, .btn-quiz-start, .btn-dark-action {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.hero-description {
+    font-family: sans-serif;
+}
 
 /* --- Theme Base --- */
+body {
+    background-color: #f5ebd9;
+    color: #2b1f19;
+}
+
 .vintage-bg {
-    background-color: #ffffff;
-    font-family: 'Faustina', serif;
-    color: hsl(24, 20%, 15%);
+    background-color: #f5ebd9;
+    color: #2b1f19;
 }
 
 .timeline-title {
@@ -15,91 +43,118 @@
     letter-spacing: 0.05em;
 }
 
-/* --- 3D Effects --- */
-.perspective-container { perspective: 1000px; }
-
-.group:hover img {
-    transform: scale(1.02);
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+.font-mono-title {
+    font-family: 'JetBrains Mono', monospace;
 }
 
-img {
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+/* --- 3D Photo Flip Card Animation --- */
+.perspective-1000 { 
+    perspective: 1000px; 
 }
 
-/* --- Updated Cards: Tasks & Challenges --- */
-.challenge-card {
-     @apply flex flex-col min-w-[340px] flex-1 p-8 rounded-2xl border border-[#e2d5c8] bg-gradient-to-b from-[#fdfbf7] to-[#f4f0ea] shadow-sm transition-all duration-300 hover:-translate-y-1 h-[360px];
+.transform-style-3d { 
+    transform-style: preserve-3d; 
 }
 
-.challenge-icon-wrapper {
-    @apply w-12 h-12 rounded-xl border border-[#e2d5c8] bg-[#fbf8f3] flex items-center justify-center mb-6 text-[#922b05];
+.backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
-.challenge-title {
-    @apply text-[22px] font-bold font-serif text-[#2d241e] mb-4 min-h-[60px]; 
+.rotate-y-180 {
+    transform: rotateY(180deg);
 }
 
-.challenge-desc {
-    @apply text-[15px] text-[#2d241e]/80 leading-relaxed flex-grow;
+.timeline-card-inner {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn-challenge-outline {
-    @apply w-full py-3.5 rounded-lg border border-[#2d241e] text-[#2d241e] font-bold text-xs uppercase tracking-widest transition-all hover:bg-[#2d241e] hover:text-white mt-6;
+/* --- Custom Scrollbars --- */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
 }
 
-/* --- Updated Cards: Knowledge Quizzes (New Design) --- */
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* --- Knowledge Quiz Cards --- */
 .quiz-card {
-    @apply bg-[#fcfbf9] rounded-2xl shadow-sm border border-[#e5ded3] flex flex-col text-center overflow-hidden transition-transform hover:-translate-y-1;
+    @apply bg-[#fcfbf9] rounded-lg shadow-xl border border-[#d0beaa] flex flex-col justify-between p-8 text-center overflow-hidden transition-all duration-300 hover:-translate-y-1;
 }
-        
+
 .quiz-icon-wrapper {
-    @apply w-12 h-12 rounded-full bg-[#f3ede4] flex items-center justify-center mb-6 text-[#4b3621] mx-auto border border-[#e5ded3];
+    @apply w-10 h-10 rounded-full border border-[#bfae99] bg-transparent flex items-center justify-center mb-6 text-[#8a7662] mx-auto font-serif italic text-sm;
 }
-        
+
 .quiz-title {
-    @apply text-[26px] font-bold font-serif text-[#2d241e] mb-3;
+    font-family: 'Cinzel', serif;
+    @apply text-xl font-bold text-[#2b1f19] mb-3;
 }
-        
+
 .quiz-desc {
-    @apply text-sm text-[#5a4f46] mb-8 leading-relaxed px-4;
+    font-family: 'Faustina', serif;
+    @apply text-xs text-gray-600 leading-relaxed mb-6 px-2;
 }
-        
+
 .btn-quiz-start {
-    @apply mt-auto bg-[#31251e] text-[#fcfbf9] px-6 py-3.5 rounded-xl font-medium text-sm w-full hover:bg-[#1a120e] transition-colors flex items-center justify-center gap-2;
+    @apply w-full bg-[#36261f] text-[#fcfbf9] py-3 rounded text-xs tracking-wider transition-colors hover:bg-[#1a120e] flex items-center justify-center gap-2 font-sans;
 }
-        
+
 .quiz-footer {
-    @apply bg-[#f7f4f0] px-6 py-4 flex justify-between items-center text-[13px] text-[#8a7662] font-semibold border-t border-[#e5ded3]/50;
+    @apply flex justify-between items-center text-[11px] font-mono text-gray-500 border-t border-gray-200 pt-3 mt-6;
 }
 
-/* --- Quiz Modal Specific Styles (New Design) --- */
-
-/* Choice Labels */
+/* --- Quiz Modal & Form Elements --- */
 .quiz-choice-label {
-    @apply flex items-center p-4 border rounded-xl cursor-pointer transition-all duration-200;
-}
-
-.quiz-choice-label:hover {
-    @apply bg-[#fcfbf9] border-[#d5c9ba];
+    @apply flex items-center p-3.5 border border-gray-200 rounded-lg cursor-pointer transition-all duration-200 hover:bg-[#fcfbf9];
 }
 
 .quiz-choice-selected {
-    @apply border-[#362a22] bg-[#fcfbf9] shadow-sm;
+    @apply border-[#362a22] bg-[#f0eadd] shadow-sm;
 }
 
-/* Custom Radio Indicator */
 .radio-outer {
-    @apply w-5 h-5 border rounded-full mr-4 flex items-center justify-center transition-colors;
+    @apply w-4 h-4 border border-gray-300 rounded-full flex items-center justify-center transition-colors;
 }
 
 .radio-inner {
-    @apply w-2.5 h-2.5 bg-[#362a22] rounded-full;
+    @apply w-2 h-2 bg-[#362a22] rounded-full;
 }
 
-/* --- UI Components --- */
+/* --- Buttons & Navigation --- */
+.btn-primary {
+    @apply bg-[#36261f] text-[#fcfbf9] px-6 py-3 rounded hover:bg-[#1a120e] transition text-xs tracking-wider font-semibold font-sans shadow-md inline-block text-center;
+}
+
+.nav-link-secondary {
+    font-family: 'Cinzel', serif;
+    @apply flex items-center justify-start gap-3 px-3 py-2 text-base font-bold text-[#2b1f19] bg-transparent rounded-lg hover:bg-black/5 transition-all;
+}
+
 .btn-dark-action {
-    @apply bg-[#3d3d3d] text-white w-full py-3 rounded-lg font-bold text-xs uppercase tracking-widest transition-all hover:bg-black hover:scale-[1.02] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:transform-none;
+    @apply bg-[#36261f] text-[#fcfbf9] w-full py-3 rounded-lg text-xs uppercase tracking-widest transition-all hover:bg-black disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed font-sans;
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
+/* --- Sidebar & Layout --- */
+.sidebar-container {
+    @apply w-40 bg-[#ded3c1] border-r border-[#c4b5a0] flex flex-col py-6 fixed top-0 left-0 bottom-0 z-50;
+}
+
+.main-content-area {
+    @apply flex-1 ml-40 flex flex-col min-h-screen;
+}

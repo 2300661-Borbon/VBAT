@@ -52,15 +52,15 @@
   /* The Tan Custom Box */
   .hero-overlay-box {
     background-color: #c1b5a9bf;
-    @apply relative z-10 p-12 md:p-16 rounded-3xl shadow-xl max-w-5xl mx-auto border border-white/20;
+    @apply relative z-10 p-8 md:p-10 rounded-3xl shadow-xl max-w-4xl mx-auto border border-white/20;
   }
 
   .hero-title {
-    --main-title-color: #ffffff;
+    --main-title-color: #000000;
     --highlight-color: #000000; 
 
-    @apply max-w-5xl font-[800] tracking-tight mt-6 leading-[1.2] text-3xl;
-    @apply md:text-6xl lg:text-7xl;
+    @apply max-w-4xl font-[800] tracking-tight mt-4 leading-[1.2] text-2xl;
+    @apply md:text-4xl lg:text-5xl;
     
     color: var(--main-title-color);
   }
@@ -70,64 +70,68 @@
   }
 
   .hero-description {
-    color: #ffffff; 
-    @apply mt-8 text-lg max-w-3xl mx-auto leading-relaxed font-medium;
-    @apply md:text-xl;
+    color: #3b2b23; 
+    font-family:sans;
+    @apply mt-6 text-base max-w-2xl mx-auto leading-relaxed;
+    @apply md:text-lg;
   }
 
   /* Video Sections */
   .video-card-large {
-    @apply relative flex flex-col items-center justify-center w-full aspect-video cursor-pointer overflow-hidden border border-slate-200 rounded-[2.5rem] text-center;
-    background: linear-gradient(135deg, #d1dbe4 0%, #f3e8e4 100%);
+    @apply relative flex flex-col items-center justify-center w-full aspect-video cursor-pointer overflow-hidden border border-slate-200 rounded-[2.5rem] text-center mb-8;
+  }
+
+  .video-bg-img {
+    @apply absolute inset-0 w-full h-full object-cover pointer-events-none;
   }
   
   .video-overlay {
-    @apply flex flex-col items-center justify-center w-full h-full;
+    @apply relative z-10 flex flex-col items-center justify-center w-full h-full p-6;
   }
 
   .play-btn-large {
-    @apply flex items-center justify-center w-20 h-20 bg-white/60 backdrop-blur-md rounded-full shadow-lg transition-transform;
+    @apply flex items-center justify-center w-20 h-20 border-2 border-white bg-black/30 backdrop-blur-sm rounded-full shadow-lg transition-transform;
     @apply group-hover:scale-110;
   }
 
   .video-card-small {
-    @apply relative flex flex-col items-center justify-center aspect-[16/10] cursor-pointer border border-slate-100 rounded-[2.5rem] transition-all;
+    @apply relative flex flex-col items-center justify-center aspect-[16/10] cursor-pointer overflow-hidden border border-slate-100 rounded-[2.5rem] transition-all;
     @apply hover:shadow-md;
     background-color: #f5e6de;
   }
 
   .play-btn-small {
-    @apply flex items-center justify-center w-16 h-16 bg-[#e6d5cc] rounded-full transition-transform;
+    @apply relative z-10 flex items-center justify-center w-14 h-14 border-2 border-white bg-black/30 backdrop-blur-sm rounded-full transition-transform;
     @apply group-hover:scale-110;
   }
 
+  
   /* About & Team Cards */
   .content-card {
     @apply p-8 md:p-12 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm;
   }
 
   .member-photo-placeholder {
-    /* Changed bg-slate-50 to a custom light tan and the border to a slightly darker tan */
-    @apply flex items-center justify-center w-full aspect-[4/5] mb-6 overflow-hidden bg-[#f9f6f2] rounded-3xl transition-colors;
+    @apply flex items-center justify-center w-full aspect-[4/5] mb-6 bg-[#f9f6f2] rounded-3xl transition-colors;
   }
 
   .modal-input {
     @apply w-full px-4 py-3 bg-[#fff9f9] border border-slate-200 rounded-lg outline-none transition-all;
     @apply focus:bg-white focus:ring-2 focus:ring-[#003d6b]/10 focus:border-[#003d6b];
-    font-family: 'Inter', sans-serif; /* Forms are easier to read in Sans-serif */
+    font-family: 'Inter', sans-serif;
   }
 
-    .role-card {
-        @apply flex flex-col items-center justify-center p-6 border-2 border-slate-100 rounded-xl transition-all duration-200 w-full;
-        @apply hover:border-[#4B3621] hover:bg-slate-50;
-    }
+  .role-card {
+    @apply flex flex-col items-center justify-center p-6 border-2 border-slate-100 rounded-xl transition-all duration-200 w-full;
+    @apply hover:border-[#4B3621] hover:bg-slate-50;
+  }
 
-    .animate-in {
-        animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+  .animate-in {
+    animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-    @keyframes modalFadeIn {
-        from { opacity: 0; transform: scale(0.95) translateY(10px); }
-        to { opacity: 1; transform: scale(1) translateY(0); }
-    }
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
 }

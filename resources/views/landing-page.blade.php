@@ -9,20 +9,20 @@
 </head>
 <body class="antialiased bg-white text-slate-900">
 
-    <nav class="sticky top-0 z-50 bg-[#C1B5A9] max-w-full mx-auto px-10 py-1 flex items-center shadow-md">
-        <div class="flex flex-1 ml-4 items-center gap-3">
-            <img src="{{ asset('images/VBaT v2.png') }}" alt="VBaT Logo" class="h-17 w-auto object-contain">
-            <div class="text-lg font-extrabold text-black tracking-tight font-title">Virtual Batangas Ancestral Timeline</div>
+    <nav class="absolute top-0 z-50 bg-transparent w-full px-6 md:px-10 h-24 flex items-center justify-between">
+        <div class="flex flex-1 items-center justify-start gap-3">
+            <img src="{{ asset('images/VBAT LOGOO.png') }}" alt="VBaT Logo" class="h-40 w-40 object-contain -translate-x-6 translate-y-3">
+            <div class="text-lg font-extrabold text-white tracking-tight font-title"></div>
         </div>
     
-        <div class="hidden md:flex items-center justify-center gap-8 ml-10 mr-5">
-            <a href="#home" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Home</a>
-            <a href="#featured" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Featured</a>
-            <a href="#about" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">About</a>
-            <a href="#team" class="text-lg font-bold text-black hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Team</a>
+        <div class="hidden md:flex flex-none items-center justify-center gap-8">
+            <a href="#home" class="text-lg font-sans font-bold text-white hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Home</a>
+            <a href="#featured" class="text-lg font-sans font-bold text-white hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Featured</a>
+            <a href="#about" class="text-lg font-sans font-bold text-white hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">About</a>
+            <a href="#team" class="text-lg font-sans font-bold text-white hover:text-[#922b05] hover:underline focus:text-[#922b05] focus:underline underline-offset-[6px] decoration-2 transition-all">Team</a>
         </div>
 
-        <div class="flex flex-1 justify-end gap-4">
+        <div class="flex flex-1 items-center justify-end gap-4">
             <button onclick="toggleModal('loginModal')" class="nav-link-secondary">Sign In</button>
             <button onclick="toggleModal('signUpModal')" class="btn-primary">Sign Up</button>
         </div>
@@ -152,7 +152,6 @@
     </script>
 
     <section id="home" class="hero-bg-container scroll-mt-20">
-        
         <div class="hero-image-layer">
             <img src="{{ asset('images/Batangas.png') }}" alt="Philippine History Collage">
             <div class="hero-darken-overlay"></div>
@@ -172,13 +171,17 @@
         </div>
     </section>
 
-    <section id="featured" class="max-w-7xl mx-auto px-6 py-20 scroll-mt-20">
+    <section id="featured" class="max-w-7xl mx-auto px-6 pt-20 pb-8 scroll-mt-20">
         <div class="text-center mb-16">
             <h2 class="text-5xl font-serif text-[#2d241e] font-bold mb-6">Featured Batangas History</h2>
-            <p class="text-slate-500 text-lg max-w-2xl mx-auto">Watch previews of the immersive VR experiences that await you.</p>
+            <p class="text-slate-500 font-sans text-lg max-w-2xl mx-auto">Watch previews of the immersive VR experiences that await you.</p>
         </div>
 
-        <div class="video-card-large group mb-8">
+        <div class="video-card-large group">
+            <!-- Background Image -->
+            <img src="images/Battle for Batangas.jpg" alt="Battle of Batangas" class="video-bg-img" />
+
+            <!-- Content Overlay -->
             <div class="video-overlay">
                 <button class="play-btn-large">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="text-[#00416a]">
@@ -186,33 +189,49 @@
                     </svg>
                 </button>
                 <div class="mt-6">
-                    <h3 class="text-2xl font-bold text-slate-900">The Battle of Batangas</h3>
-                    <p class="text-slate-500 mt-2">A defining conflict that tested the courage and resilience of the Batangueño people.</p>
+                    <h3 class="text-2xl font-bold text-[#000000]">The Battle of Batangas</h3>
+                    <p class="text-[#ffffff] font-sans mt-2">A defining conflict that tested the courage and resilience of the Batangueño people.</p>
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="video-card-small group">
-                <button class="play-btn-small">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-[#c2410c]"><path d="M8 5v14l11-7z"/></svg>
-                </button>
-                <h4 class="mt-6 font-bold text-slate-900">Japanese Atrocity</h4>
+            <div class="flex flex-col w-full">
+                <div class="video-card-small group">
+                    <video class="w-full h-full object-cover absolute inset-0" preload="metadata">
+                        <source src="images/Japanese%20Atrocity.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-btn-small" onclick="const v = this.parentElement.querySelector('video'); v.play(); v.controls = true; this.style.display='none';">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-white translate-x-0.5" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <h4 class="mt-4 font-bold text-slate-900 text-center text-lg">Japanese Atrocity in Batangas</h4>
             </div>
 
-            <div class="video-card-small group">
-                <button class="play-btn-small">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-[#c2410c]"><path d="M8 5v14l11-7z"/></svg>
-                </button>
-                <h4 class="mt-6 font-bold text-slate-900">The Sublian</h4>
+            <div class="flex flex-col w-full">
+                <div class="video-card-small group">
+                    <video class="w-full h-full object-cover absolute inset-0" preload="metadata">
+                        <source src="images/Sublian%20Batangas.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-btn-small" onclick="const v = this.parentElement.querySelector('video'); v.play(); v.controls = true; this.style.display='none';">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-white translate-x-0.5" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <h4 class="mt-4 font-bold text-slate-900 text-center text-lg">Sublian in Batangas</h4>
             </div>
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-6 py-20 space-y-12">
+    <section class="max-w-7xl mx-auto px-6 pt-8 pb-10 space-y-12">
         <div id="about" class="content-card scroll-mt-20">
             <h2 class="text-3xl font-serif text-[#2d241e] font-bold mb-6">About This Project</h2>
-            <div class="space-y-6 text-slate-500 leading-relaxed max-w-5xl">
+            <div class="space-y-6 font-sans text-slate-500 leading-relaxed max-w-5xl">
                 <p>VBaT is a revolutionary platform that merges immersive Virtual Reality (VR) with the storied history of Batangas. We believe the most powerful way to learn history isn't just to study it, but to experience it.</p>
                 <p>By transforming pivotal historical scenes into interactive VR environments, VBaT shifts students and tourists from passive observers to active participants. Instead of merely reading or listening, users are transported directly into the past to witness the events that shaped our province. More than just an educational tool, this initiative serves as a digital sanctuary, preserving and honoring Batangas' vibrant cultural heritage for generations to come.</p>
             </div>
@@ -220,37 +239,37 @@
 
         <div id="team" class="content-card scroll-mt-20">
             <h2 class="text-3xl font-serif text-[#2d241e] font-bold mb-2">Our Team</h2>
-            <p class="text-slate-500 mb-12">Created by a dedicated team bridging heritage and innovation.</p>
+            <p class="text-slate-500 font-sans mb-12">Created by a dedicated team bridging heritage and innovation.</p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div class="flex flex-col">
                     <div class="member-photo-placeholder">
-                        <img src="images/leader.jpg" alt="Manuel Antonio Borbon" class="w-[92%] h-[92%] object-cover rounded-2xl">
+                        <img src="images/leader.jpg" alt="Manuel Antonio Borbon" class="w-[75%] aspect-[4/5] object-cover rounded-2xl shadow-xl shadow-black/10">
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Manuel Antonio Borbon</h4>
-                    <p class="text-slate-500 text-sm">Project Lead</p>
+                    <p class="text-slate-500 font-sans text-sm">Project Lead</p>
                 </div>
 
                 <div class="flex flex-col">
                     <div class="member-photo-placeholder">
-                        <img src="images/member1.jpg" alt="Rafael Klio Gusto" class="w-[92%] h-[92%] object-cover rounded-2xl">
+                        <img src="images/member1.jpg" alt="Rafael Klio Gusto" class="w-[75%] aspect-[4/5] object-cover rounded-2xl shadow-xl shadow-black/10">
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Rafael Klio Gusto</h4>
-                    <p class="text-slate-500 text-sm">Member</p>
+                    <p class="text-slate-500 font-sans text-sm">Member</p>
                 </div>
 
                 <div class="flex flex-col">
                     <div class="member-photo-placeholder">
-                        <img src="images/member2.jpg" alt="Luis Gabriel Ariola" class="w-[92%] h-[92%] object-cover rounded-2xl">
+                        <img src="images/member2.jpg" alt="Luis Gabriel Ariola" class="w-[75%] aspect-[4/5] object-cover rounded-2xl shadow-xl shadow-black/10">
                     </div>
                     <h4 class="text-xl font-bold text-slate-900">Luis Gabriel Ariola</h4>
-                    <p class="text-slate-500 text-sm">Member</p>
+                    <p class="text-slate-500 font-sans text-sm">Member</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-slate-100">
+    <footer class="max-w-7xl mx-auto px-6 py-6 mt-0 border-t border-slate-100">
         <div class="text-center text-slate-500 text-sm md:text-base">
             © 2025 VBaT. Preserving Batangas Heritage Through Technology.
         </div>

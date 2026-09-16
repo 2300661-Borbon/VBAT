@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Faustina:ital,wght@0,300..800;1,300..800&family=Inter:wght@100..900&display=swap');
+
 @theme {
-  /* Chronoverse Custom Colors */
+  --font-cinzel: 'Cinzel', serif;
+  --font-faustina: 'Faustina', serif;
+  --font-inter: 'Inter', sans-serif;
+
+  /* Retained in case required by other scopes */
   --color-sidebar-tan: #c1b5a9;
   --color-sidebar-dark: #4b3621;
   --color-sidebar-hover: #e9e4d4;
@@ -10,32 +17,38 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    font-family: 'Faustina', serif;
+    @apply antialiased bg-white text-[#2d241e]; 
+  }
+
+  p, .font-body {
+    font-family: 'Faustina', serif;
+  }
+
+  h1, h2, h3, h4, .font-title {
+    font-family: 'Cinzel', serif;
   }
 }
 
 @layer components {
-  .sidebar-link {
-    @apply flex items-center px-6 py-3 transition-colors duration-200 text-gray-800 hover:bg-sidebar-hover;
-  }
-
-  .sidebar-link-active {
-    @apply flex items-center px-6 py-3 bg-sidebar-dark text-white;
-  }
-
+  /* Sidebar styles removed as requested */
   .card-container {
     @apply bg-white p-6 rounded-xl border border-gray-200 shadow-sm;
   }
 
-  .status-badge-active {
-    @apply bg-[#1B3C2B] text-[#4ADE80] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider;
+  .modal-input {
+    font-family: var(--font-inter), sans-serif;
   }
 
-  .status-badge-updating {
-    @apply bg-[#4A3728] text-[#FFB84D] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider;
+  .nav-link-secondary {
+    @apply font-sans;
   }
 
-  .status-badge-draft {
-    @apply bg-gray-200 text-gray-500 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider;
+  .btn-primary {
+    @apply bg-[#36261f] text-[#fcfbf9] px-6 py-3 rounded-full hover:bg-[#1a120e] transition text-sm tracking-normal font-semibold font-sans shadow-md inline-flex items-center gap-2;
+  }
+
+  .hero-description {
+    font-family: sans-serif;
   }
 }
