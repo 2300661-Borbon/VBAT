@@ -6,11 +6,11 @@
   h1, h2, h3, h4, .font-title {
     font-family: 'Cinzel', serif;
   }
-  
+ 
   /* Applying background ONLY to the body, not to paragraphs */
   body {
     font-family: 'Faustina', serif;
-    @apply antialiased bg-white text-[#2d241e]; 
+    @apply antialiased bg-white text-[#2d241e];
   }
 
   /* Faustina for paragraphs without giving them a white background */
@@ -21,7 +21,7 @@
 
 /* --- Components Layer --- */
 @layer components {
-  
+ 
   .nav-link-secondary {
     @apply px-4 py-1.5 text-xs font-sans tracking-widest text-white bg-[#922B05] rounded-lg transition-all;
     @apply hover:bg-[#c04000];
@@ -57,7 +57,7 @@
 
   .hero-title {
     --main-title-color: #000000;
-    --highlight-color: #000000; 
+    --highlight-color: #000000;
 
     @apply max-w-4xl font-[800] tracking-tight mt-4 leading-[1.2] text-2xl;
     @apply md:text-4xl lg:text-5xl;
@@ -70,7 +70,7 @@
   }
 
   .hero-description {
-    color: #3b2b23; 
+    color: #3b2b23;
     font-family:sans;
     @apply mt-6 text-base max-w-2xl mx-auto leading-relaxed;
     @apply md:text-lg;
@@ -84,7 +84,7 @@
   .video-bg-img {
     @apply absolute inset-0 w-full h-full object-cover pointer-events-none;
   }
-  
+ 
   .video-overlay {
     @apply relative z-10 flex flex-col items-center justify-center w-full h-full p-6;
   }
@@ -105,7 +105,7 @@
     @apply group-hover:scale-110;
   }
 
-  
+ 
   /* About & Team Cards */
   .content-card {
     @apply p-8 md:p-12 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm;

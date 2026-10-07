@@ -16,14 +16,22 @@
         </div>
         
         <div class="flex-1 bg-[#4b3621] rounded-2xl h-full flex items-center justify-between px-8 text-white shadow-md">
-            <h1 class="text-xl font-light tracking-wide">Admin Dashboard</h1>
+            <h1 class="text-xl font-light tracking-wide w-1/3">Admin Dashboard</h1>
             
-            <a href="{{ route('logout') }}" class="btn-primary">
-                Logout
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-            </a>
+            <!-- Centered Navigation Links -->
+            <nav class="flex justify-center gap-4 w-1/3">
+                <a href="/admin/users" class="px-5 py-2 rounded-full bg-[#36261f] hover:bg-[#1a120e] transition text-sm font-sans tracking-wide">User Management</a>
+                <a href="/admin/quizzes" class="px-5 py-2 rounded-full bg-[#36261f] hover:bg-[#1a120e] transition text-sm font-sans tracking-wide">Quiz Management</a>
+            </nav>
+            
+            <div class="w-1/3 flex justify-end">
+                <a href="{{ route('logout') }}" class="btn-primary">
+                    Logout
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
     </header>
 

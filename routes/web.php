@@ -1,44 +1,79 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\QuizController;
+
+/*
+|--------------------------------------------------------------------------
+| Public & Guest Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('landing-page');
 })->name('landing');
 
-Route::post('/login-temporary', function (Request $request) {
-    $email = strtolower($request->input('email'));
-    $password = $request->input('password');
-
-    if ($email === 'vbat.admin@gmail.com' && $password === 'admin123') {
-        return redirect()->route('admin.users');
-    }
-    return redirect()->route('user.dashboard');
-})->name('login.temp');
-
-Route::post('/register-temporary', function (Request $request) {
-    return redirect()->route('user.dashboard');
-})->name('register.temp');
-
-// UPDATED: Accepts both GET (anchor links) and POST (form buttons)
-Route::match(['get', 'post'], '/logout', function () {
+Route::get('/login', function () {
     return redirect()->route('landing');
-})->name('logout');
+})->name('login');
 
-Route::get('/dashboard/user', function () {
-    return view('user-dash'); 
-})->name('user.dashboard');
+Route::get('/auth/callback', function () {
+    return view('auth.callback');
+})->name('auth.callback');
 
-/**
- * ADMIN PANEL ROUTES
- */
-Route::prefix('admin')->group(function () {
-    // Direct admin routes immediately to the user management view
+// Authentication Controller Group
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login');
+    Route::post('/register', 'register')->name('register');
+    Route::post('/password/update-custom', 'updatePassword')->name('password.update.custom');
+    Route::post('/auth/google-session', 'handleGoogleSession')->name('auth.google-session');
+    Route::match(['get', 'post'], '/logout', 'logout')->name('logout');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Protected User Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth:web'])->group(function () {
+    // User Dashboard
+    Route::get('/dashboard/user', [QuizController::class, 'userDashboard'])->name('user.dashboard');
+
+    // Quiz Result API (Used by Alpine.js fetch)
+    Route::post('/quiz-results', [QuizController::class, 'storeResult'])->name('quiz.results.store');
+
+    // Quiz Execution Routes (User Side)
+    Route::prefix('quizzes')->name('quizzes.')->controller(QuizController::class)->group(function () {
+        Route::get('/{quiz}', 'show')->name('show');
+        Route::post('/{quiz}/submit', 'submit')->name('submit');
+        Route::get('/{quiz}/results/{attempt?}', 'results')->name('results');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin-Only Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', '/admin/users');
     Route::redirect('/dashboard', '/admin/users');
 
-    Route::get('/users', function () { 
-        return view('admin.users'); 
-    })->name('admin.users');
+    Route::controller(AdminController::class)->group(function () {
+        // User Management Routes
+        Route::get('/users', 'index')->name('users');
+        Route::put('/users/{user}/email', 'updateEmail')->name('users.updateEmail');
+        Route::put('/users/{user}/password', 'resetPassword')->name('users.resetPassword');
+        Route::delete('/users/{user}', 'deleteUser')->name('users.delete');
+
+        // Quiz Management Routes
+        Route::get('/quizzes', 'manageQuizzes')->name('quizzes');
+        Route::post('/quizzes', 'storeQuiz')->name('quizzes.store');
+        Route::put('/quizzes/{quiz}', 'updateQuiz')->name('quizzes.update');
+        Route::delete('/quizzes/{quiz}', 'deleteQuiz')->name('quizzes.delete');
+    });
 });

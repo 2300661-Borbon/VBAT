@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', // Added to allow inserting 'student' or 'tourist'
     ];
 
     /**
