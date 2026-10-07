@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\VrController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,9 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth:web'])->group(function () {
     // User Dashboard
     Route::get('/dashboard/user', [QuizController::class, 'userDashboard'])->name('user.dashboard');
+
+    // Virtual Reality Route
+    Route::get('/vr/{scene}', [VrController::class, 'show'])->name('vr.show');
 
     // Quiz Result API (Used by Alpine.js fetch)
     Route::post('/quiz-results', [QuizController::class, 'storeResult'])->name('quiz.results.store');

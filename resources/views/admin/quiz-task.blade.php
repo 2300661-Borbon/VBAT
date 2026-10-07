@@ -57,7 +57,7 @@
             
             <div class="p-6 bg-[#4b3621] text-white rounded-t-2xl flex justify-between items-center sticky top-0 z-10">
                 <h2 class="text-2xl font-title" x-text="isEditing ? 'Edit Quiz' : 'Add New Quiz'"></h2>
-                <button @click="closeModal()" class="text-white hover:text-gray-300">&times;</button>
+                <button @click="closeModal()" class="text-white hover:text-gray-300 text-3xl leading-none font-bold focus:outline-none">&times;</button>
             </div>
 
             <div class="p-6 flex-1 text-[#2d241e]">
@@ -108,7 +108,7 @@
 
             <div class="p-6 bg-gray-50 rounded-b-2xl flex justify-end gap-4 border-t border-gray-200 sticky bottom-0">
                 <button @click="closeModal()" class="px-6 py-2 rounded-full font-body text-sm border border-gray-300">Cancel</button>
-                <button @click="saveQuiz()" class="bg-[#4b3621] text-white px-6 py-2 rounded-full font-body text-sm">Save Quiz</button>
+                <button @click="saveQuiz()" class="bg-[#4b3621] hover:bg-[#36261f] text-white px-6 py-2 rounded-full font-body text-sm">Save Quiz</button>
             </div>
         </div>
     </div>

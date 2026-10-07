@@ -52,7 +52,7 @@
             </header>
 
             <!-- BANNER TITLE -->
-            <div class="bg-[#3b2b23] text-center py-3 border-b border-[#2b1f19]">
+            <div id="timeline" class="bg-[#3b2b23] text-center py-3 border-b border-[#2b1f19]">
                 <h1 class="text-xl md:text-2xl tracking-widest text-[#ebdcd0] uppercase font-bold">
                     BATANGAS HISTORY & CULTURE
                 </h1>
@@ -68,6 +68,11 @@
                 'quizzes' => $quizzes ?? [],
                 'userResults' => $userResults ?? []
             ])
+
+            <hr class="border-t-[4px] border-[#2b1f19] w-full shadow-lg">
+
+            <!-- VIRTUAL REALITY SECTION -->
+            @include('vrapp')
         </main>
     </div>
 </body>
