@@ -74,7 +74,7 @@
                     
                     @foreach($users as $index =>$user)
                     <tr class="hover:bg-white/20 transition-colors" 
-                        x-show="searchQuery === '' || '{{ strtolower($user->name) }}'.includes(searchQuery.toLowerCase()) || '{{ strtolower($user->email) }}'.includes(searchQuery.toLowerCase()) \vert{}\vert{} '{{ strtolower($user->role) }}'.includes(searchQuery.toLowerCase())">
+                        x-show="searchQuery === '' || '{{ strtolower($user->name) }}'.includes(searchQuery.toLowerCase())">
                         
                         <td class="px-8 py-4 font-medium">{{ $index + 1 }}</td>
                         <!-- Added Role Column with capitalization -->

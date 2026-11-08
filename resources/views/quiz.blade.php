@@ -219,7 +219,8 @@
 
             getQuestionText(question) {
                 if (!question) return '';
-                return question.question_title || question.text || question.question_text || question.title || '';
+                // Updated: Check question.questions first to match DB column name
+                return question.questions || question.question_text || question.question_title || question.text || question.title || '';
             },
 
             cleanStr(str) {
@@ -235,7 +236,8 @@
             isAnswerCorrect(selected, question) {
                 if (!question || selected === null || selected === undefined) return false;
 
-                const rawCorrect = question.correct_answer ?? question.correct ?? question.answer;
+                // Updated: Added question.correct_answer_text to match DB column name
+                const rawCorrect = question.correct_answer_text ?? question.correct_answer ?? question.correct ?? question.answer;
                 if (rawCorrect === null || rawCorrect === undefined) return false;
 
                 const choices = this.getChoices(question);
@@ -298,7 +300,6 @@
                 const currentQ = this.questions[this.currentStep];
                 const cleanAnswerText = this.getChoiceText(this.selectedAnswer);
 
-                // Store answer cleanly keyed by Question ID or prefixed Step
                 const qKey = currentQ.id ? `q_${currentQ.id}` : `step_${this.currentStep}`;
                 this.userAnswers[qKey] = {
                     question_id: currentQ.id || null,
@@ -320,7 +321,6 @@
             },
 
             async saveResult() {
-                // Construct clean dictionary mapping question_id -> answer
                 const formattedAnswers = {};
                 Object.values(this.userAnswers).forEach(item => {
                     if (item.question_id) {
