@@ -42,7 +42,7 @@
                 <h2 class="text-2xl font-bold text-slate-900 mb-1">Welcome!</h2>
                 <p class="text-sm text-slate-500 mb-6">Sign in to your VBaT account</p>
 
-                <!-- Session Status Message (e.g. Password Updated Successfully) -->
+                <!-- Session Status Message -->
                 @if (session('status'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 text-sm" role="alert">
                         <span class="block sm:inline">{{ session('status') }}</span>
@@ -108,7 +108,6 @@
                 <form action="{{ route('register') }}" method="POST" class="space-y-4">
                     @csrf
 
-                    <!-- New Role Dropdown -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-1">I am a</label>
                         <select name="role" class="modal-input bg-white w-full" required>
@@ -146,20 +145,21 @@
                             class="modal-input" 
                             required
                             minlength="8"
-                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}"
-                            title="Must be at least 8 characters long, contain uppercase and lowercase letters, at least one number, and one special character."
+                            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*(\d|[\W_])).{8,}"
+                            title="Must be at least 8 characters, contain uppercase and lowercase letters, and at least one number or special character."
                         >
-                        <p class="text-[11px] text-slate-500 mt-1">
-                            Must be 8+ characters with uppercase, lowercase, a number, and a special character.
-                        </p>
+                        <div class="text-[11px] text-slate-500 mt-1">
+                            <p class="mb-1">New password must contain:</p>
+                            <ul class="list-disc list-inside space-y-px pl-1">
+                                <li>At least 8 characters</li>
+                                <li>At least 1 lowercase character</li>
+                                <li>At least 1 uppercase character</li>
+                                <li>At least 1 number and 1 special character</li>
+                            </ul>
+                        </div>
                         @error('password')
                             <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                         @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-1">Confirm Password</label>
-                        <input type="password" name="password_confirmation" placeholder="Confirm password" class="modal-input" required>
                     </div>
 
                     <button type="submit" class="w-full py-3 bg-[#4B3621] text-white font-bold rounded-lg hover:bg-[#98623c] transition-all shadow-md mt-2">
@@ -218,9 +218,15 @@
                             pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}"
                             title="Must be at least 8 characters long, contain uppercase and lowercase letters, at least one number, and one special character."
                         >
-                        <p class="text-[11px] text-slate-500 mt-1">
-                            Must be 8+ characters with uppercase, lowercase, a number, and a special character.
-                        </p>
+                        <div class="text-[11px] text-slate-500 mt-1">
+                            <p class="mb-1">New password must contain:</p>
+                            <ul class="list-disc list-inside space-y-px pl-1">
+                                <li>At least 8 characters</li>
+                                <li>At least 1 lowercase character</li>
+                                <li>At least 1 uppercase character</li>
+                                <li>At least 1 number and 1 special character</li>
+                            </ul>
+                        </div>
                         @error('password')
                             <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                         @enderror
@@ -269,7 +275,6 @@
             <p class="text-slate-500 font-sans text-lg max-w-2xl mx-auto">Watch previews of the immersive VR experiences that await you.</p>
         </div>
 
-        <!-- Modified Battle of Batangas Card -->
         <div class="flex flex-col w-full mb-10">
             <div class="video-card-large group" style="margin-bottom: 1rem;">
                 <img src="images/Battle for Batangas.jpg" alt="Battle of Batangas" class="video-bg-img" />
@@ -312,7 +317,6 @@
             </div>
         </div>
 
-        <!-- Team Section with restored name font & slightly larger photos -->
         <div id="team" class="content-card scroll-mt-20 !py-6 !px-8">
             <h2 class="text-3xl font-serif text-[#2d241e] font-bold mb-1">Our Team</h2>
             <p class="text-slate-500 font-sans mb-4">Created by a dedicated team bridging heritage and innovation.</p>
@@ -359,7 +363,6 @@
     </footer>
 
     <script>
-        // Supabase Initialization
         const supabaseUrl = 'https://evnccsxlnoajyailcwpb.supabase.co';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bmNjc3hsbm9hanlhaWxjd3BiIiwicm9sZSI6ImFub24iLCJpYXQiOjE389OTA2MDc5LCJleHAiOjIxMDU0ODIwNzl9.NidFKUM_RVLFdeBAiRtvgr-lBk6PB3A5zJUqUAnjGq8'; 
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
@@ -393,14 +396,12 @@
             }
         }
 
-        // Enable Audio & Show Controls on Click
         function toggleAudio(video) {
             video.muted = false;
             video.controls = true;
             video.play();
         }
 
-        // Auto-play videos silently when scrolled into view
         document.addEventListener('DOMContentLoaded', () => {
             const videoObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -418,7 +419,6 @@
             });
         });
 
-        // Back To Top Scroll Logic
         const backToTopBtn = document.getElementById('backToTopBtn');
 
         window.addEventListener('scroll', () => {

@@ -29,10 +29,6 @@
                     <span>Quiz</span>
                 </a>
                 <hr class="border-[#c4b5a0] mx-2 my-1">
-                <a href="#vr" class="nav-link-secondary">
-                    <span class="material-symbols-outlined text-[24px]">head_mounted_device</span>
-                    <span>Virtual Reality</span>
-                </a>
             </nav>
         </aside>
 
@@ -68,11 +64,6 @@
                 'quizzes' => $quizzes ?? [],
                 'userResults' => $userResults ?? []
             ])
-
-            <hr class="border-t-[4px] border-[#2b1f19] w-full shadow-lg">
-
-            <!-- VIRTUAL REALITY SECTION -->
-            @include('vrapp')
         </main>
     </div>
 </body>

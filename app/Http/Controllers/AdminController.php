@@ -73,6 +73,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'questions' => 'required|array|min:1',
             'questions.*.text' => 'required|string',
             'questions.*.choices' => 'required|array|min:2',
@@ -80,12 +81,15 @@ class AdminController extends Controller
         ]);
 
         DB::transaction(function () use ($validated) {
-            $quiz = Quiz::create(['title' => $validated['title']]);
+            $quiz = Quiz::create([
+                'title' => $validated['title'],
+                'description' => $validated['description'] ?? null,
+            ]);
 
             foreach ($validated['questions'] as $q) {
                 $quiz->questions()->create([
-                    'text' => $q['text'],
-                    'choices' => $q['choices'], // Automatically cast to JSON in the Model
+                    'questions' => $q['text'], // Map request 'text' to DB column 'questions'
+                    'choices' => $q['choices'],
                     'correct_answer' => $q['correct_answer'],
                 ]);
             }
@@ -98,6 +102,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'questions' => 'required|array|min:1',
             'questions.*.id' => 'nullable|integer',
             'questions.*.text' => 'required|string',
@@ -106,7 +111,10 @@ class AdminController extends Controller
         ]);
 
         DB::transaction(function () use ($quiz, $validated) {
-            $quiz->update(['title' => $validated['title']]);
+            $quiz->update([
+                'title' => $validated['title'],
+                'description' => $validated['description'] ?? null,
+            ]);
 
             $submittedIds = collect($validated['questions'])->pluck('id')->filter()->toArray();
             
@@ -117,7 +125,7 @@ class AdminController extends Controller
                 $quiz->questions()->updateOrCreate(
                     ['id' => $q['id'] ?? null, 'quiz_id' => $quiz->id],
                     [
-                        'text' => $q['text'],
+                        'questions' => $q['text'], // Map request 'text' to DB column 'questions'
                         'choices' => $q['choices'],
                         'correct_answer' => $q['correct_answer'],
                     ]

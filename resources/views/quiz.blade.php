@@ -4,32 +4,53 @@
     <section id="quiz" class="bg-[#48352b] text-[#f2e2d0] py-16 px-8 md:px-16 flex-1 w-full">
         <div class="max-w-5xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-2">Knowledge Quizzes</h2>
-            <p class="text-sm text-[#d0beaa] mb-12">Test your understanding of Philippine history events</p>
+            <p class="text-sm text-[#d0beaa] mb-8">Test your understanding of Philippine history events</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <template x-for="quiz in quizzes" :key="quiz.id">
-                    <div class="quiz-card flex flex-col justify-between bg-white text-[#2d241e] p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <div class="flex flex-col items-center text-center">
-                            <div class="quiz-icon-wrapper w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center mb-4">
-                                <span class="italic font-serif">B</span>
+            <!-- CAROUSEL CONTAINER WITH SIDE NAV BUTTONS -->
+            <div class="relative flex items-center">
+
+                <!-- LEFT SIDE ARROW BUTTON (Pushed further left) -->
+                <button @click="$refs.quizContainer.scrollBy({ left: -340, behavior: 'smooth' })"
+                        x-show="quizzes.length > 3"
+                        class="absolute -left-12 md:-left-16 z-20 w-12 h-12 rounded-full bg-[#362a22] text-[#f2e2d0] border border-[#8a7662]/50 shadow-xl hover:bg-[#2d241e] hover:scale-105 transition-all flex items-center justify-center text-xl font-bold focus:outline-none">
+                    &#10094;
+                </button>
+
+                <!-- HORIZONTAL CAROUSEL CONTAINER -->
+                <div x-ref="quizContainer" 
+                     class="flex overflow-x-auto gap-8 py-2 w-full scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    <template x-for="quiz in quizzes" :key="quiz.id">
+                        <div class="quiz-card flex-none w-[300px] md:w-[320px] snap-start flex flex-col justify-between bg-white text-[#2d241e] p-6 rounded-xl border border-gray-200 shadow-sm">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="quiz-icon-wrapper w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center mb-4">
+                                    <span class="italic font-serif">B</span>
+                                </div>
+                                <h3 class="quiz-title font-bold text-lg mb-2" x-text="quiz.title"></h3>
+                                <p class="quiz-desc text-xs text-gray-600 mb-6" x-text="quiz.description || 'Test your knowledge on this event.'"></p>
                             </div>
-                            <h3 class="quiz-title font-bold text-lg mb-2" x-text="quiz.title"></h3>
-                            <p class="quiz-desc text-xs text-gray-600 mb-6" x-text="quiz.description || 'Test your knowledge on this event.'"></p>
-                        </div>
-                        <div class="w-full">
-                            <button @click="startQuiz(quiz)" class="btn-primary w-full justify-center mb-4">
-                                Start Knowledge Quiz &rarr;
-                            </button>
-                            <div class="quiz-footer flex justify-between text-xs text-gray-500 font-sans">
-                                <span x-text="(quiz.questions ? quiz.questions.length : 0) + ' Questions'"></span>
-                                <span>Passing Score: 70%</span>
+                            <div class="w-full">
+                                <button @click="startQuiz(quiz)" class="btn-primary w-full justify-center mb-4">
+                                    Start Knowledge Quiz &rarr;
+                                </button>
+                                <div class="quiz-footer flex justify-between text-xs text-gray-500 font-sans">
+                                    <span x-text="(quiz.questions ? quiz.questions.length : 0) + ' Questions'"></span>
+                                    <span>Passing Score: 70%</span>
+                                </div>
                             </div>
                         </div>
+                    </template>
+                    <div x-show="quizzes.length === 0" class="w-full text-center py-8 text-[#d0beaa]">
+                        No quizzes available at the moment.
                     </div>
-                </template>
-                <div x-show="quizzes.length === 0" class="col-span-3 text-center py-8 text-[#d0beaa]">
-                    No quizzes available at the moment.
                 </div>
+
+                <!-- RIGHT SIDE ARROW BUTTON (Pushed further right) -->
+                <button @click="$refs.quizContainer.scrollBy({ left: 340, behavior: 'smooth' })"
+                        x-show="quizzes.length > 3"
+                        class="absolute -right-12 md:-right-16 z-20 w-12 h-12 rounded-full bg-[#362a22] text-[#f2e2d0] border border-[#8a7662]/50 shadow-xl hover:bg-[#2d241e] hover:scale-105 transition-all flex items-center justify-center text-xl font-bold focus:outline-none">
+                    &#10095;
+                </button>
+
             </div>
         </div>
     </section>
@@ -219,7 +240,6 @@
 
             getQuestionText(question) {
                 if (!question) return '';
-                // Updated: Check question.questions first to match DB column name
                 return question.questions || question.question_text || question.question_title || question.text || question.title || '';
             },
 
@@ -236,7 +256,6 @@
             isAnswerCorrect(selected, question) {
                 if (!question || selected === null || selected === undefined) return false;
 
-                // Updated: Added question.correct_answer_text to match DB column name
                 const rawCorrect = question.correct_answer_text ?? question.correct_answer ?? question.correct ?? question.answer;
                 if (rawCorrect === null || rawCorrect === undefined) return false;
 

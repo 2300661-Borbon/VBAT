@@ -61,9 +61,16 @@
             </div>
 
             <div class="p-6 flex-1 text-[#2d241e]">
+                <!-- Quiz Name -->
                 <div class="mb-6">
                     <label class="block font-body font-semibold mb-2">Quiz Name</label>
                     <input type="text" x-model="formData.name" class="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#4b3621]">
+                </div>
+
+                <!-- Quiz Description -->
+                <div class="mb-6">
+                    <label class="block font-body font-semibold mb-2">Description</label>
+                    <textarea x-model="formData.description" rows="3" class="w-full border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-[#4b3621]" placeholder="Enter quiz description..."></textarea>
                 </div>
 
                 <div class="space-y-6">
@@ -121,7 +128,7 @@
             isModalOpen: false,
             isEditing: false,
             editingQuizId: null,
-            formData: { name: '', questions: [] },
+            formData: { name: '', description: '', questions: [] },
 
             initData(initialQuizzes) {
                 this.quizzes = initialQuizzes;
@@ -139,7 +146,7 @@
             openAddModal() {
                 this.isEditing = false;
                 this.editingQuizId = null;
-                this.formData = { name: '', questions: [this.getEmptyQuestion()] };
+                this.formData = { name: '', description: '', questions: [this.getEmptyQuestion()] };
                 this.isModalOpen = true;
             },
 
@@ -173,7 +180,11 @@
                     };
                 }) : [this.getEmptyQuestion()];
 
-                this.formData = { name: quiz.title, questions: formattedQuestions };
+                this.formData = { 
+                    name: quiz.title, 
+                    description: quiz.description || '', 
+                    questions: formattedQuestions 
+                };
                 this.isModalOpen = true;
             },
 
@@ -205,6 +216,7 @@
 
                 const payload = {
                     title: this.formData.name,
+                    description: this.formData.description,
                     questions: this.formData.questions.map(q => {
                         const choicesList = q.choices.map(c => c.text);
                         return {

@@ -11,6 +11,7 @@ class Question extends Model
 
     protected $fillable = [
         'quiz_id',
+        'questions', // Added to allow saving to your Supabase 'questions' column
         'text',
         'question_text',
         'choices',
@@ -26,6 +27,14 @@ class Question extends Model
     public function quiz()
     {
         return $this->belongsTo(Quiz::class, 'quiz_id', 'id');
+    }
+
+    /**
+     * Fallback accessor so $question->text works regardless of DB column name.
+     */
+    public function getTextAttribute()
+    {
+        return $this->attributes['questions'] ?? $this->attributes['text'] ?? $this->attributes['question_text'] ?? null;
     }
 
     /**
